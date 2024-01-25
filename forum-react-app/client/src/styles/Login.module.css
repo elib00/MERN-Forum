@@ -1,0 +1,111 @@
+.login-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.forum-details-wrapper,
+.login-details-wrapper {
+  height: 100%;
+  width: 50%;
+}
+
+.forum-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+}
+
+.login-details-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2rem;
+  align-items: start;
+}
+
+.forum-details-wrapper h1 {
+  font-size: 7rem;
+  color: white;
+}
+
+.login-details-wrapper form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  min-width: 400px;
+  height: 50%;
+  border-radius: 10px;
+  border: solid white 1px;
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+form input {
+  width: 100%;
+  height: 60px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: solid gray 1px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  font-family: inherit;
+}
+
+.btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 5px;
+  color: white;
+  background-color: #000100;
+  border: solid gray 1px;
+}
+
+.btn-create-account {
+  background-color: #5a6272;
+  border: none;
+}
+
+.forgot-password-wrapper {
+  width: 100%;
+  height: 50px;
+  border-bottom: solid gray 1px;
+  display: flex;
+  justify-content: center;
+}
+
+.forgot-password-wrapper a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.login-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 90px;
+  width: 60%;
+  height: 60px;
+  background-color: red;
+  color: white;
+}
+
+.input-error {
+  outline: solid red 2px;
+}
