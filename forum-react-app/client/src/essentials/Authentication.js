@@ -25,6 +25,11 @@ export const createUser = async (userData) => {
         password: password
     }
 
-    const response = await axios.post("http://localhost:5555/api/users/register", newUserData);
-    return response.data;
+    try{
+      const response = await axios.post("http://localhost:5555/api/users/register", newUserData);
+      return response.data;
+    }catch(err){
+      console.log(err.response.data);
+      return err.response.data;
+    }
 };

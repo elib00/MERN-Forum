@@ -2,7 +2,8 @@ import {
   createBrowserRouter, 
   createRoutesFromElements, 
   RouterProvider,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom';
 
 import { useState, useEffect } from "react";
@@ -14,10 +15,13 @@ import AuthLayout from './layouts/AuthLayout';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log("nirerender");
 
   useEffect(() => {
     const cookie = getCookie("user");
@@ -27,31 +31,28 @@ function App() {
         lastName: cookie.lastName,
         id: cookie.id
       });
+      setIsLoggedIn(true);
     } 
   }, []);
 
-  let routes;
-
-  if (currentUser) {
-    routes = (
-      <Route path="/" element={<RootLayout/>}>
-        <Route index element={<Home />}></Route>
-        <Route path="*"></Route>
+  const routes = (
+    <Route path="/">
+      <Route index element={<Navigate to="home"/>}></Route>
+      <Route element={<RootLayout/>}>
+        <Route path="home" element={<Home />}></Route>
       </Route>
-    );
-  } else {
-    routes = (
-      <Route path="/" element={<AuthLayout />}>
-        <Route index element={<Login />}></Route>
-        <Route path="createAccount" element={<Signup />}></Route>
+      <Route element={<AuthLayout />}>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="create-account" element={<Signup />}></Route>
       </Route>
-    );
-  }
+      <Route path="*" element={<NotFound />}></Route>
+    </Route>
+  );
 
   const router = createBrowserRouter(createRoutesFromElements(routes));
 
   return (
-    <AuthContext.Provider value={{currentUser, setCurrentUser}}>
+    <AuthContext.Provider value={{currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn}}>
       <RouterProvider router={router} />
     </AuthContext.Provider>
   );

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate} from 'react-router-dom';
 import { authenticateUser } from '../essentials/Authentication';
 import { permitLogin } from "../essentials/Utility/";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.js";
 import styles from "../styles/Login.module.css";
 
-const Login = () => {
+const Login = () => { 
   const [userDetails, setUserDetails] = useState({userEmail: "", userPassword: ""});
   const [authError, setAuthError] = useState("");
-  const { setCurrentUser } = useAuth();
+  const { setCurrentUser, setIsLoggedIn, isLoggedIn } = useAuth();
   const [userExists, setUserExists] = useState(true);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setUserDetails({...userDetails, [event.target.name]: event.target.value});
@@ -21,7 +22,8 @@ const Login = () => {
     const res = await authenticateUser({...userDetails});
     console.log(res);
     if(res && res.success) {
-      permitLogin(res.data, setCurrentUser);
+      permitLogin(res.data, setCurrentUser, setIsLoggedIn);
+      navigate("/home");
     }else{
       setAuthError(res.message);
       setUserExists(false);
@@ -34,8 +36,12 @@ const Login = () => {
   
   const createNewAccount = () => {
     console.log("redirecting to...");
-    <Navigate to="/signup"/>
+    navigate("/create-account");
   } 
+
+  if(isLoggedIn){
+    return <Navigate to="/home" />;
+  }
 
   return (
     <div className={styles["login-container"]}>
@@ -49,14 +55,14 @@ const Login = () => {
             className={!userExists ? styles["input-error"] : ""}
             name="userEmail"
             onChange={handleChange}
-            value={userDetails.firstName}
+            value={userDetails.userEmail}
             placeholder="Email"
           />
           <input 
             className={!userExists ? styles["input-error"] : ""}
             name="userPassword"
             onChange={handleChange}
-            value={userDetails.lastName}
+            value={userDetails.userPassword}
             placeholder="Password"
           />
           <button 

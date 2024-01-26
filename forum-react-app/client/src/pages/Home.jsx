@@ -7,6 +7,7 @@ import styles from "../styles/Home.module.css";
 // import { UserContext } from "../contexts/UserContext";
 
 const Home = () => {
+
   return (
     <main className={styles["homepage-container"]}>
         <Sidebar />

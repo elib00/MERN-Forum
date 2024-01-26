@@ -2,13 +2,16 @@ import React from "react";
 import styles from "../styles/Header.module.css";
 import { logoutUser } from "../essentials/Utility"
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 // import React from "react";
 
 const Header = () => {
-  const { setCurrentUser } = useAuth();
+  const { setCurrentUser, setIsLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    logoutUser(setCurrentUser);
+    logoutUser(setCurrentUser, setIsLoggedIn);
+    navigate("/login");
   };
   
   return (

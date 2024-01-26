@@ -1,6 +1,6 @@
 import { setCookie, deleteCookie } from "./CookieHandler";
 
-export const permitLogin = (userData, setCurrentUser) => {
+export const permitLogin = async (userData, setCurrentUser, setIsLoggedIn) => {
 
     const { _id, firstName, lastName, email } = userData;
     const cookieData = {
@@ -13,10 +13,12 @@ export const permitLogin = (userData, setCurrentUser) => {
     // console.log(cookieData);
     setCookie("user", cookieData, 1);
     setCurrentUser(cookieData);
+    setIsLoggedIn(true);
 };   
 
-export const logoutUser = (setCurrentUser) => {
+export const logoutUser = (setCurrentUser, setIsLoggedIn) => {
     deleteCookie("user");
     setCurrentUser(null);
+    setIsLoggedIn(false);
 };  
 

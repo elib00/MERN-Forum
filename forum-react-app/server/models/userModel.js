@@ -31,4 +31,7 @@ const userSchema = mongoose.Schema(
     }
 );
 
+//to prevent duplicate accounts
+userSchema.index({ firstName: 1, lastName: 1, email: 1 }, { unique: true });
+
 export const User = mongoose.model("User", userSchema);
